@@ -19,8 +19,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        nome = findViewById(R.id.editNOme);
-        cpf = findViewById(R.id.editCPF);
+        nome = findViewById(R.id.editNome);
+        cpf = findViewById(R.id.editCpf);
         tel = findViewById(R.id.editTelefone);
     }
 
