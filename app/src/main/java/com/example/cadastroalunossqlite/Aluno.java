@@ -1,11 +1,12 @@
 package com.example.cadastroalunossqlite;
 
-public class Aluno {
+import java.io.Serializable;
+
+public class Aluno implements Serializable {
 
     private Integer id;
     private String nome;
     private String cpf;
-    private String tel;
 
     public Integer getId() {
         return id;
@@ -31,11 +32,14 @@ public class Aluno {
         this.cpf = cpf;
     }
 
-    public String getTel(String s) {
-        return tel;
+    public String getTelefone() {
+        return telefone;
     }
 
-    public void setTel(String tel) {
-        this.tel = tel;
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
+
+    private String telefone;
+
 }
