@@ -42,4 +42,9 @@ public class Aluno implements Serializable {
 
     private String telefone;
 
+    @Override
+    public String toString(){
+        return nome;
+    }
+
 }
