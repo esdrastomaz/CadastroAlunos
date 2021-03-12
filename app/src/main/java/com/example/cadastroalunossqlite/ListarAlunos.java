@@ -17,7 +17,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +37,8 @@ public class ListarAlunos extends AppCompatActivity {
         dao = new AlunoDAO(this);
         alunos = dao.obterTodos();
         alunosFiltrados.addAll(alunos);
-        ArrayAdapter<Aluno> adaptador = new ArrayAdapter<Aluno>(this, android.R.layout.simple_list_item_1, alunosFiltrados);
+        //ArrayAdapter<Aluno> adaptador = new ArrayAdapter<Aluno>(this, android.R.layout.simple_list_item_1, alunosFiltrados);
+        AlunoAdapter adaptador = new AlunoAdapter(this, alunosFiltrados);
         listView.setAdapter(adaptador);
         registerForContextMenu(listView);
     }
