@@ -109,6 +109,15 @@ public class ListarAlunos extends AppCompatActivity {
         startActivity(it);
     }
 
+    public void atualizar(MenuItem item){
+        AdapterView.AdapterContextMenuInfo menuInfo =
+                (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        final Aluno alunoAtualizar = alunosFiltrados.get(menuInfo.position);
+        Intent it = new Intent(this, MainActivity.class);
+        it.putExtra("aluno", alunoAtualizar);
+        startActivity(it);
+    }
+
     @Override
     public void onResume(){
         super.onResume();
