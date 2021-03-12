@@ -2,11 +2,18 @@ package com.example.cadastroalunossqlite;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -15,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListarAlunos extends AppCompatActivity {
+
 
     private ListView listView;
     private AlunoDAO dao;
@@ -32,6 +40,7 @@ public class ListarAlunos extends AppCompatActivity {
         alunosFiltrados.addAll(alunos);
         ArrayAdapter<Aluno> adaptador = new ArrayAdapter<Aluno>(this, android.R.layout.simple_list_item_1, alunosFiltrados);
         listView.setAdapter(adaptador);
+        registerForContextMenu(listView);
     }
 
     public boolean onCreateOptionsMenu(Menu menu){
@@ -57,6 +66,12 @@ public class ListarAlunos extends AppCompatActivity {
         return true;
     }
 
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu,v, menuInfo);
+        MenuInflater i = getMenuInflater();
+        i.inflate(R.menu.menu_contexto, menu);
+    }
+
     public void procuraAluno(String nome){
         alunosFiltrados.clear();
         for(Aluno a : alunos){
@@ -66,6 +81,27 @@ public class ListarAlunos extends AppCompatActivity {
         }
 
         listView.invalidateViews();
+    }
+
+    public void excluir(MenuItem item){
+        AdapterView.AdapterContextMenuInfo menuInfo =
+                (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        final Aluno alunoExcluir = alunosFiltrados.get(menuInfo.position);
+
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle("Atenção")
+                .setMessage("Realmente Deseja Excluir o Aluno ?")
+                .setNegativeButton("NÃO", null)
+                .setPositiveButton("SIM", new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i){
+                        alunosFiltrados.remove(alunoExcluir);
+                        alunos.remove(alunoExcluir);
+                        dao.excluir(alunoExcluir);
+                        listView.invalidateViews();
+                    }
+                }).create();
+        dialog.show();
     }
 
     public void cadastrar(MenuItem item){
